@@ -23,7 +23,7 @@ ascoltatori.build(settings, function (_ascoltatore) {
   ascoltatore = _ascoltatore;
 
   ascoltatore.subscribe('mqtt/*', function() {
-    debug('-- Receving published message');
+    debug('-- Receving subscription');
     debug('TOPIC', arguments['0']);
     debug('PAYLOAD', arguments['1']);
   });
