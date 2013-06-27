@@ -4,7 +4,8 @@ var mongoose  = require('mongoose')
   , server    = require('http').createServer(app)
   , debug     = require('debug')('lelylan');
 
-var ascoltatori = require('ascoltatori')
+var Device = require('./app/models/mqtt/device')
+  , ascoltatori = require('ascoltatori')
   , ascoltatore;
 
 var settings = {
@@ -23,7 +24,7 @@ ascoltatori.build(settings, function (_ascoltatore) {
   ascoltatore = _ascoltatore;
 
   ascoltatore.subscribe('mqtt/*', function() {
-    debug('-- Receving subscription');
+    debug('-- Receving subscription payload');
     debug('TOPIC', arguments['0']);
     debug('PAYLOAD', arguments['1']);
   });
@@ -46,14 +47,9 @@ app.get('/', function(req, res) {
 });
 
 app.put('/devices/:id', function(req, res) {
-  var secret = req.get('X-Physical-Secret');
-
-  debug('-- Request received');
-  debug('DEVICE ID', req.params.id);
-  debug('DEVICE SECRET', secret);
-  debug('DEVICE PROPERTIES', req.body);
-
-  ascoltatore.publish('mqtt/' + secret + '/set', req.body.properties);
+  var topic = 'mqtt/' + req.get('X-Physical-Secret') + '/set';
+  ascoltatore.publish(topic, req.body.properties);
+  Device.findOrCreate(req, function(err, doc) { if (err) debug('Error', err) });
   res.status(202).json({});
 });
 
