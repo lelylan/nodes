@@ -32,9 +32,9 @@ server.listen(process.env.PORT, function() {
 });
 
 
-// ----------
-// Live test
-// ----------
+// ---------------
+// Live page test
+// ---------------
 
 app.get('/', function(req, res) {
   res.sendfile(__dirname + '/index.html')
@@ -46,7 +46,7 @@ app.get('/', function(req, res) {
 // --------------
 
 app.put('/mqtt/devices/:id/properties/set', function(req, res) {
-  publish(req);
+  publish(req, '/set');
   res.status(202).json({status:202});
 });
 
@@ -56,7 +56,6 @@ app.put('/mqtt/devices/:id/properties/get', function(req, res) {
 });
 
 var publish = function(req, mode) {
-  var mode  = mode ? '/get' : '/set'
   var topic = 'mqtt/' + req.get('X-Physical-Secret') + mode;
   ascoltatore.publish(topic, req.body);
 }
