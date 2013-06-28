@@ -10,10 +10,7 @@ var request = require('supertest')
 chai.use(require('sinon-chai'));
 chai.use(require('chai-fuzzy'));
 
-
-var execute
-  , ascoltatore
-  , settings = {
+var settings = {
       type: 'mongo',
       uri: process.env.MONGOLAB_JOBS_HOST,
       db: process.env.MONGOLAB_JOBS_DB,
@@ -25,6 +22,7 @@ describe('MQTT node',function() {
 
   describe('PUT /devices/:id/properties/set',function() {
 
+    var execute;
     var payload = { id: 'device-1', properties: [{ id: 'property-1', value: 'on' }] };
 
     beforeEach(function(done) {
