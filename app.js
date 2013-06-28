@@ -9,6 +9,7 @@ var ascoltatori = require('ascoltatori')
   , ascoltatore;
 
 var settings = {
+    type: 'mongo',
     uri: process.env.MONGOLAB_JOBS_HOST,
     db: process.env.MONGOLAB_JOBS_DB,
     pubsubCollection: 'mqtt',
