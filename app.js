@@ -16,9 +16,7 @@ var settings = {
   };
 
 
-// ---------------
 // Express Server
-// ---------------
 
 app.configure(function() {
   app.use(express.bodyParser());
@@ -32,7 +30,6 @@ server.listen(process.env.PORT, function() {
 });
 
 
-// ---------------
 // Live page test
 // ---------------
 
@@ -41,9 +38,7 @@ app.get('/', function(req, res) {
 });
 
 
-// --------------
 // MQTT Services
-// --------------
 
 app.put('/mqtt/devices/:id/properties/set', function(req, res) {
   publish(req, '/set');
@@ -61,9 +56,7 @@ var publish = function(req, mode) {
 }
 
 
-// -------------
 // Ascoltatori
-// -------------
 
 ascoltatori.build(settings, function (_ascoltatore) {
   ascoltatore = _ascoltatore;
@@ -79,9 +72,7 @@ ascoltatori.build(settings, function (_ascoltatore) {
 });
 
 
-// --------------------
-// Send req to Lelylan
-// --------------------
+// Request to Lelylan
 
 var sync = function(secret, payload) {
   uri = 'http://api.lelylan.com/devices/' + payload.id + '/properties';
