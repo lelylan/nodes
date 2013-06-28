@@ -25,8 +25,10 @@ describe('MQTT node',function() {
 
   describe('PUT /devices/:id/properties/set',function() {
 
+    var payload = { id: 'device-1', properties: [{ id: 'property-1', value: 'on' }] };
+
     beforeEach(function(done) {
-      ascoltatori.build(settings, function() { done(); });
+      ascoltatori.build(settings, function() { done() });
     });
 
     beforeEach(function() {
@@ -34,7 +36,7 @@ describe('MQTT node',function() {
         .put('/mqtt/devices/device-1/properties/set')
         .set('Content-Type', 'application/json')
         .set('X-Physical-Secret', 'secret-1')
-        .send({id: 'device-1', properties: [{ id: 'property-1', value: 'on'}]})
+        .send(payload)
     });
 
     it('returns 202', function(done) {
@@ -47,10 +49,9 @@ describe('MQTT node',function() {
           ascoltatori.build(settings, function(ascoltatore) {
             ascoltatore.subscribe('mqtt/secret-1/set', function() {
               expect(arguments['0']).to.be.equal('mqtt/secret-1/set');
-              expect(arguments['1']).to.be.like({id: 'device-1', properties: [{ id: 'property-1', value: 'on'}]});
+              expect(arguments['1']).to.be.like(payload)
               done()
-            });
-            cb();
+            }); cb();
           });
         },
         function(cb) {

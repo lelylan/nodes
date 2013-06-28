@@ -63,7 +63,7 @@ ascoltatori.build(settings, function (_ascoltatore) {
   ascoltatore = _ascoltatore;
 
   ascoltatore.subscribe('mqtt/*', function() {
-    debug('-- Receving subscription payload');
+    debug('> Receving subscription payload');
     debug('TOPIC', arguments['0']);
     debug('PAYLOAD', arguments['1']);
 
@@ -80,7 +80,7 @@ var sync = function(secret, payload) {
   options = { uri: uri, method: 'PUT', headers: headers(payload), json: payload }
 
   request(options, function(err, response, body) {
-    debug('-- Request sent to Lelylan');
+    debug('> Request sent to Lelylan');
     if (err) debug("ERROR", err.message);
     debug('SENT REQUEST TO LELYLAN DEVICE', payload.id)
   });
