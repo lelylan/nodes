@@ -1,17 +1,54 @@
 var request = require('supertest')
-var app = require('../app')
+  , app = require('../app')
+  , ascoltatori = require("ascoltatori")
+  , async = require("async")
+  , chai = require("chai")
+  , expect = require("chai").expect
+  , sinon = require("sinon")
+  , sinonChai = require("sinon-chai");
+
+chai.use(sinonChai);
+
 
 describe('MQTT',function() {
 
-  describe('when updates properties',function() {
+  var makeFakeAscoltatore = function() {
+    var r = {};
+    r.publish = r.subscribe = r.unsubscribe = r.close = r.on =
+    r.removeListener = r.registerDomain = function () {};
+    return r;
+  };
 
-    it('PUT /devices/:id/properties should return 202', function(done) {
+  describe('PUT /devices/:id/properties/set',function() {
+
+    it('returns 202', function(done) {
       request(app)
-        .put('/mqtt/devices/device-1/properties')
+        .put('/mqtt/devices/device-1/properties/set')
         .set('Content-Type', 'application/json')
         .set('X-Physical-Secret', 'secret-1')
         .send({ id: 'device-1', properties: [{ id: 'property-1', value: 'on'}] })
-        .expect(202, done);
+        .expect(202)
+        .expect({ status: 202 }, done);
+    });
+
+    it('publish on topic /mqtt/:secret/set', function(done) {
+      var ascoltatore = makeFakeAscoltatore();
+      var spy = sinon.spy(ascoltatore, 'publish');
+
+      async.series([
+        function(cb) {
+          request(app)
+            .put('/mqtt/devices/device-1/properties/set')
+            .set('Content-Type', 'application/json')
+            .set('X-Physical-Secret', 'secret-1')
+            .send({ id: 'device-1', properties: [{ id: 'property-1', value: 'on'}] })
+            .expect(202, cb)
+        },
+        function(cb) {
+          expect(spy).to.have.been.calledWith('/mqtt/secret-1/set');
+          cb();
+        }
+      ], done);
     });
   });
 });

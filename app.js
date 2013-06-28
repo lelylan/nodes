@@ -45,12 +45,12 @@ app.get('/', function(req, res) {
 // MQTT Services
 // --------------
 
-app.put('/mqtt/devices/:id/properties', function(req, res) {
+app.put('/mqtt/devices/:id/properties/set', function(req, res) {
   publish(req);
-  res.status(202).json({ status: 202 });
+  res.status(202).json({status:202});
 });
 
-app.put('/mqtt/simulate', function(req, res) {
+app.put('/mqtt/devices/:id/properties/get', function(req, res) {
   publish(req, '/get');
   res.status(202).json({});
 });
@@ -100,11 +100,3 @@ var headers = function(payload) {
 }
 
 module.exports = app;
-
-
-// --------------
-// CURL Examples
-// --------------
-
-// SET curl -X PUT http://localhost:8004/mqtt/devices/1/properties -H 'Content-Type: application/json' -H 'X-Physical-Secret: secret-1' -d '{ "id": "1", "properties": [{ "id": "<status>", "value": "on" }] }'
-// GET curl -X PUT http://localhost:8004/mqtt/simulate -H 'Content-Type: application/json' -H 'X-Physical-Secret: secret-1' -d '{ "id": "1", "properties": [{ "id": "<status>", "value": "on" }] }'
