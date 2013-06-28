@@ -27,8 +27,9 @@ app.configure(function() {
   app.use(express.static(__dirname + '/app/assets'))
 });
 
-server.listen(process.env.PORT);
-debug('Server listening on port', process.env.PORT);
+server.listen(process.env.PORT, function() {
+  debug('Server listening on port', process.env.PORT);
+});
 
 
 // ----------
@@ -46,7 +47,7 @@ app.get('/', function(req, res) {
 
 app.put('/mqtt/devices/:id/properties', function(req, res) {
   publish(req);
-  res.status(202).json({});
+  res.status(202).json({ status: 202 });
 });
 
 app.put('/mqtt/simulate', function(req, res) {
@@ -84,7 +85,7 @@ ascoltatori.build(settings, function (_ascoltatore) {
 // --------------------
 
 var sync = function(secret, payload) {
-  uri     = 'http://api.lelylan.com/devices/' + payload.id + '/properties';
+  uri = 'http://api.lelylan.com/devices/' + payload.id + '/properties';
   options = { uri: uri, method: 'PUT', headers: headers(payload), json: payload }
 
   request(options, function(err, response, body) {
@@ -97,6 +98,8 @@ var sync = function(secret, payload) {
 var headers = function(payload) {
   return { 'X-Physical-Secret': payload.secret, 'Content-Type': 'application/json' }
 }
+
+module.exports = app;
 
 
 // --------------
