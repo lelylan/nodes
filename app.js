@@ -5,8 +5,7 @@ var mongoose = require('mongoose')
   , request  = require('request')
   , debug    = require('debug')('lelylan');
 
-var Device = require('./app/models/mqtt/device')
-  , ascoltatori = require('ascoltatori')
+var ascoltatori = require('ascoltatori')
   , ascoltatore;
 
 var settings = {
@@ -58,11 +57,7 @@ app.put('/mqtt/simulate', function(req, res) {
 var publish = function(req, mode) {
   var mode  = mode ? '/get' : '/set'
   var topic = 'mqtt/' + req.get('X-Physical-Secret') + mode;
-  ascoltatore.publish(topic, req.body.properties);
-  Device.findOrCreate(req, function(err, doc) {
-    if (err) debug('Error', err)
-    debug('DOCUMENT', doc);
-  });
+  ascoltatore.publish(topic, req.body);
 }
 
 
@@ -89,22 +84,24 @@ ascoltatori.build(settings, function (_ascoltatore) {
 // --------------------
 
 var sync = function(secret, payload) {
-  Device.findOne({ secret: secret }, function (err, _device) {
+  uri     = 'http://api.lelylan.com/devices/' + payload.id + '/properties';
+  options = { uri: uri, method: 'PUT', headers: headers(payload), json: payload }
+
+  request(options, function(err, response, body) {
+    debug('-- Request sent to Lelylan');
     if (err) debug("ERROR", err.message);
-    var device = _device;
-
-    uri = 'http://api.lelylan.com/devices/' + device.device_id + '/properties';
-    options = { uri: uri, method: 'PUT', headers: headers(device), json: payload }
-
-    request(options, function(err, response, body) {
-      debug('-- Request sent to Lelylan');
-      if (err) debug("ERROR", err.message);
-      debug('SENT REQUEST TO LELYLAN', device.device_id)
-      debug('BODY', body)
-    });
+    debug('SENT REQUEST TO LELYLAN DEVICE', payload.id)
   });
 }
 
-var headers = function(device) {
-  return { 'X-Physical-Secret': device.secret, 'Content-Type': 'application/json' }
+var headers = function(payload) {
+  return { 'X-Physical-Secret': payload.secret, 'Content-Type': 'application/json' }
 }
+
+
+// --------------
+// CURL Examples
+// --------------
+
+// SET curl -X PUT http://localhost:8004/mqtt/devices/1/properties -H 'Content-Type: application/json' -H 'X-Physical-Secret: secret-1' -d '{ "id": "1", "properties": [{ "id": "<status>", "value": "on" }] }'
+// GET curl -X PUT http://localhost:8004/mqtt/simulate -H 'Content-Type: application/json' -H 'X-Physical-Secret: secret-1' -d '{ "id": "1", "properties": [{ "id": "<status>", "value": "on" }] }'
