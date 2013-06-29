@@ -21,7 +21,8 @@ Run Node server.
 
 ## Getting Started
 
-* [Express server](http://localhost:8004)
+* Run `foreman start`
+* Open the [server](http://localhost:8004)
 
 
 ## Deploy
