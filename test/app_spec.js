@@ -22,6 +22,7 @@ var settings = {
 
 describe('MQTT node',function() {
 
+  var execute, lelylan;
   var payload = { id: 'device-1', properties: [{ id: 'property-1', value: 'on' }] };
 
   beforeEach(function() {
@@ -29,8 +30,6 @@ describe('MQTT node',function() {
   });
 
   describe('PUT /devices/:id/properties/set',function() {
-
-    var execute;
 
     beforeEach(function(done) {
       ascoltatori.build(settings, function() { done() });
@@ -69,12 +68,10 @@ describe('MQTT node',function() {
 
   describe('MQTT message publishing',function() {
 
-    var lelylan;
-
     beforeEach(function() {
-      // Add header check
       lelylan = nock('http://api.lelylan.com')
         .matchHeader('accept', 'application/json')
+        .matchHeader('X-Physical-Secret', 'secret-1')
         .filteringRequestBody(function(path) { return '*' })
         .put('/devices/device-1/properties', '*')
         .reply(200, { id: 'device-1'});

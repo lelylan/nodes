@@ -77,7 +77,7 @@ ascoltatori.build(settings, function (_ascoltatore) {
 
 var sync = function(secret, payload) {
   var uri = 'http://api.lelylan.com/devices/' + payload.id + '/properties';
-  var options = { uri: uri, method: 'PUT', headers: headers(payload), json: payload }
+  var options = { uri: uri, method: 'PUT', headers: headers(secret), json: payload }
 
   request(options, function(err, response, body) {
     debug('> Request sent to Lelylan');
@@ -86,8 +86,8 @@ var sync = function(secret, payload) {
   });
 }
 
-var headers = function(payload) {
-  return { 'X-Physical-Secret': payload.secret, 'Content-Type': 'application/json' }
+var headers = function(secret) {
+  return { 'X-Physical-Secret': secret, 'Content-Type': 'application/json' }
 }
 
 module.exports = app;
