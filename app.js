@@ -17,6 +17,7 @@ var settings = {
   };
 
 
+
 // Express Server
 
 app.configure(function() {
@@ -31,12 +32,13 @@ server.listen(process.env.PORT, function() {
 });
 
 
+
 // Live page test
-// ---------------
 
 app.get('/', function(req, res) {
   res.sendfile(__dirname + '/index.html')
 });
+
 
 
 // MQTT Services
@@ -57,20 +59,20 @@ var publish = function(req, mode) {
 }
 
 
+
 // Ascoltatori
 
 ascoltatori.build(settings, function (_ascoltatore) {
   ascoltatore = _ascoltatore;
 
   ascoltatore.subscribe('mqtt/*', function() {
-    debug('> Receving subscription payload');
-    debug('TOPIC', arguments['0']);
-    debug('PAYLOAD', arguments['1']);
+    debug('TOPIC', arguments['0'], 'PAYLOAD', arguments['1']);
 
     var data = arguments['0'].split('/');
     if (data[2] == 'get') sync(data[1], arguments['1']);
   });
 });
+
 
 
 // Request to Lelylan
@@ -80,7 +82,6 @@ var sync = function(secret, payload) {
   var options = { uri: uri, method: 'PUT', headers: headers(secret), json: payload }
 
   request(options, function(err, response, body) {
-    debug('> Request sent to Lelylan');
     if (err) debug("ERROR", err.message);
     debug('SENT REQUEST TO LELYLAN DEVICE', payload.id)
   });

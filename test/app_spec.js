@@ -77,21 +77,21 @@ describe('MQTT node',function() {
         .reply(200, { id: 'device-1'});
     });
 
-    it('makes a request to Lelylan', function(done) {
-      async.series([
-        function(cb) {
-          ascoltatori.build(settings, function(ascoltatore) {
-            ascoltatore.publish('mqtt/secret-1/get', payload);
-            cb();
-          });
+    beforeEach(function(done) {
+      ascoltatori.build(settings, function(ascoltatore) {
+        ascoltatore.publish('mqtt/secret-1/get', payload);
+        done();
+      });
+    });
+
+    it('sends a request to lelylan', function(done) {
+      async.until(
+        function() {
+          return lelylan.isDone();
         },
-        function(cb) {
-          setTimeout(function() {
-            expect(lelylan.isDone()).to.be.equal(true);
-            cb();
-          }, 100);
-        }
-      ], done);
+        function(callback) {
+          setTimeout(callback, 1);
+        }, done);
     });
   });
 });
