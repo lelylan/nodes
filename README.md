@@ -21,8 +21,8 @@ Run Node server.
 
 ## Getting Started
 
-[Express server](http://localhost:8004)
-[MQTT server](http://localhost:1883)
+* [Express server](http://localhost:8004)
+* [MQTT server](http://localhost:1883)
 
 ## Deploy
 
@@ -31,8 +31,8 @@ Follow [Node.js on Heroku](https://devcenter.heroku.com/articles/nodejs).
 
 ## Resources
 
-* [Mosca](https://github.com/mcollina/mosca) and
-* [Ascoltatori](https://github.com/mcollina/ascoltatori).
+* [Mosca](https://github.com/mcollina/mosca)
+* [Ascoltatori](https://github.com/mcollina/ascoltatori)
 * [Physical API](http://dev.lelylan.com/api/physicals)
 
 
@@ -46,7 +46,7 @@ Do not forget to provide specs to your contribution.
 * Fork and clone the repository
 * Run `gem install foreman`
 * Run `npm install`
-* Run `foreman start --env .test.env` (`.test.env` contains the database test URIs)
+* Run `foreman start --env .test.env`
 * Run `foreman run mocha spec/app.spec.js --env .test.env`
 
 

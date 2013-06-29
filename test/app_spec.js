@@ -5,25 +5,32 @@ var request = require('supertest')
   , chai = require('chai')
   , expect = require('chai').expect
   , sinon = require('sinon')
+  , nock = require('nock')
   , debug = require('debug')('test');
 
 chai.use(require('sinon-chai'));
 chai.use(require('chai-fuzzy'));
 
 var settings = {
-      type: 'mongo',
-      uri: process.env.MONGOLAB_JOBS_HOST,
-      db: process.env.MONGOLAB_JOBS_DB,
-      pubsubCollection: 'mqtt',
-      mongo: {} };
+  type: 'mongo',
+  uri: process.env.MONGOLAB_JOBS_HOST,
+  db: process.env.MONGOLAB_JOBS_DB,
+  pubsubCollection: 'mqtt',
+  mongo: {} };
+
 
 
 describe('MQTT node',function() {
 
+  var payload = { id: 'device-1', properties: [{ id: 'property-1', value: 'on' }] };
+
+  beforeEach(function() {
+    nock.cleanAll();
+  });
+
   describe('PUT /devices/:id/properties/set',function() {
 
     var execute;
-    var payload = { id: 'device-1', properties: [{ id: 'property-1', value: 'on' }] };
 
     beforeEach(function(done) {
       ascoltatori.build(settings, function() { done() });
@@ -31,7 +38,7 @@ describe('MQTT node',function() {
 
     beforeEach(function() {
       execute = request(app)
-        .put('/mqtt/devices/device-1/properties/set')
+        .put('/mqtt/devices/device-1/properties')
         .set('Content-Type', 'application/json')
         .set('X-Physical-Secret', 'secret-1')
         .send(payload)
@@ -56,6 +63,38 @@ describe('MQTT node',function() {
           execute.expect(202, cb)
         }
       ]);
+    });
+  });
+
+
+  describe('MQTT message publishing',function() {
+
+    var lelylan;
+
+    beforeEach(function() {
+      // Add header check
+      lelylan = nock('http://api.lelylan.com')
+        .matchHeader('accept', 'application/json')
+        .filteringRequestBody(function(path) { return '*' })
+        .put('/devices/device-1/properties', '*')
+        .reply(200, { id: 'device-1'});
+    });
+
+    it('makes a request to Lelylan', function(done) {
+      async.series([
+        function(cb) {
+          ascoltatori.build(settings, function(ascoltatore) {
+            ascoltatore.publish('mqtt/secret-1/get', payload);
+            cb();
+          });
+        },
+        function(cb) {
+          setTimeout(function() {
+            expect(lelylan.isDone()).to.be.equal(true);
+            cb();
+          }, 100);
+        }
+      ], done);
     });
   });
 });

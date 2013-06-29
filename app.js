@@ -41,7 +41,7 @@ app.get('/', function(req, res) {
 
 // MQTT Services
 
-app.put('/mqtt/devices/:id/properties/set', function(req, res) {
+app.put('/mqtt/devices/:id/properties', function(req, res) {
   publish(req, '/set');
   res.status(202).json({status:202});
 });
@@ -76,8 +76,8 @@ ascoltatori.build(settings, function (_ascoltatore) {
 // Request to Lelylan
 
 var sync = function(secret, payload) {
-  uri = 'http://api.lelylan.com/devices/' + payload.id + '/properties';
-  options = { uri: uri, method: 'PUT', headers: headers(payload), json: payload }
+  var uri = 'http://api.lelylan.com/devices/' + payload.id + '/properties';
+  var options = { uri: uri, method: 'PUT', headers: headers(payload), json: payload }
 
   request(options, function(err, response, body) {
     debug('> Request sent to Lelylan');
