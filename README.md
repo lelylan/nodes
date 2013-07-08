@@ -1,18 +1,28 @@
-# MQTT access node for Lelylan
+# Lelylan Gateway to the physical world for Lelylan
 
-MQTT node for Lelylan [Lelylan](http://dev.lelylan.com)
+Gateway to access different *nodes* connecting the physical world to
+Lelylan [Lelylan](http://dev.lelylan.com). A *node* represents the way
+a physical device (or a family of devices) are connected to the web.
+
+- [X] [Lelylan nodes](nodes.lelylan.com/nodes)
+- [ ] [Electric Imp](nodes.lelylan.com/electricimp)
+- [ ] [lockitron](nodes.lelylan.com/lockitron)
+
+In other words Lelylan Nodes aims to connect the largest number of new
+and existing devices to the Lelylan platform in an open and collaborative
+way.
 
 
 ## Requirements
 
-The MQTT node is tested against Node 0.8.8.
+Lelylan Nodes is tested against Node 0.8.8.
 
 
 ## Installation
 
 Clone the repository.
 
-    git clone git@github.com:lelylan/mqtt.git
+    git clone git@github.com:lelylan/nodes.git
 
 Run Node server.
 
@@ -34,7 +44,6 @@ Follow [getting started with jitsu](https://www.nodejitsu.com/getting-started/).
 
 * [Ascoltatori](https://github.com/mcollina/ascoltatori)
 * [Physical API](http://dev.lelylan.com/api/physicals)
-* [Mosca](https://github.com/mcollina/mosca)
 
 
 ## Contributing
@@ -57,14 +66,13 @@ Follow [github](https://github.com/styleguide/) guidelines.
 
 ## Feedback
 
-Use the [issue tracker](http://github.com/lelylan/mqtt/issues) for bugs.
+Use the [issue tracker](http://github.com/lelylan/nodes/issues) for bugs.
 [Mail](mailto:touch@lelylan.com) or [Tweet](http://twitter.com/lelylan) us for any idea that can improve the project.
 
 
 ## Links
 
-* [GIT Repository](http://github.com/lelylan/mqtt)
-* [Mosca](https://github.com/mcollina/mosca)
+* [GIT Repository](http://github.com/lelylan/nodes)
 * [Ascoltatori](https://github.com/mcollina/ascoltatori)
 * [Physical API](http://dev.lelylan.com/api/physicals)
 * [Lelylan Dev Center](http://dev.lelylan.com)
@@ -78,15 +86,15 @@ Use the [issue tracker](http://github.com/lelylan/mqtt/issues) for bugs.
 
 ## Contributors
 
-Special thanks to the [following people](https://github.com/lelylan/mqtt/contributors) for submitting patches.
+Special thanks to the [following people](https://github.com/lelylan/nodes/contributors) for submitting patches.
 
 
 ## Changelog
 
-See [CHANGELOG](mqtt/blob/master/CHANGELOG.md)
+See [CHANGELOG](nodes/blob/master/CHANGELOG.md)
 
 
 ## Copyright
 
 Copyright (c) 2013 [Lelylan](http://lelylan.com).
-See [LICENSE](mqtt/blob/master/LICENSE.md) for details.
+See [LICENSE](nodes/blob/master/LICENSE.md) for details.
