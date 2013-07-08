@@ -1,10 +1,10 @@
-# Lelylan Gateway to the physical world for Lelylan
+# Lelylan Gateway
 
-Gateway to access different *nodes* connecting the physical world to
-Lelylan [Lelylan](http://dev.lelylan.com). A *node* represents the way
+Gateway to access different **nodes** connecting the physical world to
+Lelylan [Lelylan](http://dev.lelylan.com). A node represents the way
 a physical device (or a family of devices) are connected to the web.
 
-- [X] [Lelylan nodes](nodes.lelylan.com/nodes)
+- [X] [Lelylan MQTT](nodes.lelylan.com/mqtt)
 - [ ] [Electric Imp](nodes.lelylan.com/electricimp)
 - [ ] [lockitron](nodes.lelylan.com/lockitron)
 
