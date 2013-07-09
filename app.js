@@ -3,7 +3,9 @@ var mongoose = require('mongoose')
   , app      = express()
   , server   = require('http').createServer(app)
   , request  = require('request')
-  , debug    = require('debug')('lelylan');
+  , debug    = require('debug')('lelylan')
+  , Device   = require('./app/models/devices/device');
+
 
 var ascoltatori = require('ascoltatori')
   , ascoltatore;
@@ -17,7 +19,7 @@ var settings = {
   };
 
 
-
+// ---------------
 // Express Server
 
 app.configure(function() {
@@ -32,7 +34,7 @@ server.listen(process.env.PORT, function() {
 });
 
 
-
+// ---------------
 // Live page test
 
 app.get('/', function(req, res) {
@@ -40,54 +42,53 @@ app.get('/', function(req, res) {
 });
 
 
+// -----------------------------------
+// MQTT node -> publish to the device
 
-// MQTT Services
-
-app.put('/mqtt/devices/:id/properties', function(req, res) {
-  publish(req, '/set');
+app.put('/mqtt/devices/:id', function(req, res) {
+  publish(req, '/get');
   res.status(202).json({status:202});
 });
 
-app.put('/mqtt/devices/:id/properties/get', function(req, res) {
-  publish(req, '/get');
-  res.status(202).json({});
-});
-
 var publish = function(req, mode) {
-  var topic = 'mqtt/' + req.get('X-Physical-Secret') + mode;
+  var topic = 'devices/' + req.params.id + mode;
   ascoltatore.publish(topic, req.body);
 }
 
 
-
-// Ascoltatori
+// --------------------------------------
+// MQTT node <- subscribe to the devices
 
 ascoltatori.build(settings, function (_ascoltatore) {
   ascoltatore = _ascoltatore;
 
-  ascoltatore.subscribe('mqtt/*', function() {
+  ascoltatore.subscribe('devices/*', function() {
     debug('TOPIC', arguments['0'], 'PAYLOAD', arguments['1']);
 
     var data = arguments['0'].split('/');
-    if (data[2] == 'get') sync(data[1], arguments['1']);
+    if (data[2] == 'set') sendLelylan(data[1], arguments['1']);
   });
 });
 
+var sendLelylan = function(id, payload) {
+  var uri = 'http://api.lelylan.com/devices/' + id + '/properties';
+  var options = { uri: uri, method: 'PUT', json: payload }
 
+	Device.findOne({ _id: id }, function (err, doc) {
+		if (err) console.log('ERROR', err.message);
 
-// Request to Lelylan
+		if (doc) {
+			options.headers = setHeaders(doc.secret);
 
-var sync = function(secret, payload) {
-  var uri = 'http://api.lelylan.com/devices/' + payload.id + '/properties';
-  var options = { uri: uri, method: 'PUT', headers: headers(secret), json: payload }
-
-  request(options, function(err, response, body) {
-    if (err) debug("ERROR", err.message);
-    debug('SENT REQUEST TO LELYLAN DEVICE', payload.id)
+			request(options, function(err, response, body) {
+				if (err) console.log('ERROR', err.message);
+				debug('Sent request to lelylan device with id', doc.id)
+			});
+		}
   });
 }
 
-var headers = function(secret) {
+var setHeaders = function(secret) {
   return { 'X-Physical-Secret': secret, 'Content-Type': 'application/json' }
 }
 

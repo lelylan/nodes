@@ -1,4 +1,5 @@
 var request = require('supertest')
+	, mongoose = require('mongoose')
   , app = require('../app')
   , ascoltatori = require('ascoltatori')
   , async = require('async')
@@ -18,80 +19,91 @@ var settings = {
   pubsubCollection: 'mqtt',
   mongo: {} };
 
+var Factory = require('factory-lady')
+  , Device = require('../app/models/devices/device');
+
+require('./factories/devices/device');
 
 
-describe('MQTT node',function() {
+describe('MQTT Node',function() {
 
-  var execute, lelylan;
-  var payload = { id: 'device-1', properties: [{ id: 'property-1', value: 'on' }] };
+  var execute, lelylan, device;
+  var payload = { properties: [{ id: 'property-1', value: 'on' }] };
 
   beforeEach(function() {
     nock.cleanAll();
   });
 
-  describe('PUT /devices/:id/properties/set',function() {
-
-    beforeEach(function(done) {
-      ascoltatori.build(settings, function() { done() });
-    });
-
-    beforeEach(function() {
-      execute = request(app)
-        .put('/mqtt/devices/device-1/properties')
-        .set('Content-Type', 'application/json')
-        .set('X-Physical-Secret', 'secret-1')
-        .send(payload)
-    });
-
-    it('returns 202', function(done) {
-      execute.expect(202).expect({ status: 202 }, done);
-    });
-
-    it('publish on /mqtt/:secret/set', function(done) {
-      async.series([
-        function(cb) {
-          ascoltatori.build(settings, function(ascoltatore) {
-            ascoltatore.subscribe('mqtt/secret-1/set', function() {
-              expect(arguments['0']).to.be.equal('mqtt/secret-1/set');
-              expect(arguments['1']).to.be.like(payload)
-              done()
-            }); cb();
-          });
-        },
-        function(cb) {
-          execute.expect(202, cb)
-        }
-      ]);
+  beforeEach(function(done) {
+    Factory.create('device', {}, function(doc) {
+      device = doc;
+      done();
     });
   });
 
+	describe('subscribe',function() {
 
-  describe('MQTT message publishing',function() {
+		beforeEach(function() {
+			lelylan = nock('http://api.lelylan.com')
+				.matchHeader('accept', 'application/json')
+				.matchHeader('X-Physical-Secret', device.secret)
+				.filteringRequestBody(function(path) { return '*' })
+				.put('/devices/' + device.id + '/properties', '*')
+				.reply(200, {});
+		});
 
-    beforeEach(function() {
-      lelylan = nock('http://api.lelylan.com')
-        .matchHeader('accept', 'application/json')
-        .matchHeader('X-Physical-Secret', 'secret-1')
-        .filteringRequestBody(function(path) { return '*' })
-        .put('/devices/device-1/properties', '*')
-        .reply(200, { id: 'device-1'});
-    });
+		beforeEach(function(done) {
+			ascoltatori.build(settings, function(ascoltatore) {
+				ascoltatore.publish('devices/' + device.id + '/set', payload);
+				done();
+			});
+		});
 
-    beforeEach(function(done) {
-      ascoltatori.build(settings, function(ascoltatore) {
-        ascoltatore.publish('mqtt/secret-1/get', payload);
-        done();
-      });
-    });
+		it('sends a request to lelylan', function(done) {
+			async.until(
+				function() {
+					return lelylan.isDone();
+				},
+				function(callback) {
+					setTimeout(callback, 1);
+				}, done);
+		});
+	});
 
-    it('sends a request to lelylan', function(done) {
-      async.until(
-        function() {
-          return lelylan.isDone();
-        },
-        function(callback) {
-          setTimeout(callback, 1);
-        }, done);
-    });
-  });
+
+	describe('publish (PUT /mqtt/devices/:id)',function() {
+
+		beforeEach(function(done) {
+			ascoltatori.build(settings, function() { done() });
+		});
+
+		beforeEach(function() {
+			execute = request(app)
+				.put('/mqtt/devices/' + device.id)
+				.set('Content-Type', 'application/json')
+				.set('X-Physical-Secret', device.secret)
+				.send(payload)
+		});
+
+		it('returns 202', function(done) {
+			execute.expect(202).expect({ status: 202 }, done);
+		});
+
+		it('publish on /devices/:id/get', function(done) {
+			async.series([
+				function(cb) {
+					ascoltatori.build(settings, function(ascoltatore) {
+						ascoltatore.subscribe('devices/' + device.id + '/get', function() {
+							expect(arguments['0']).to.be.equal('devices/' + device.id + '/get');
+							expect(arguments['1']).to.be.like(payload)
+							done()
+						}); cb();
+					});
+				},
+				function(cb) {
+					execute.expect(202, cb)
+				}
+			]);
+		});
+	});
 });
