@@ -66,11 +66,11 @@ ascoltatori.build(settings, function (_ascoltatore) {
     debug('TOPIC', arguments['0'], 'PAYLOAD', arguments['1']);
 
     var data = arguments['0'].split('/');
-    if (data[2] == 'set') sendLelylan(data[1], arguments['1']);
+    if (data[2] == 'set') syncLelylan(data[1], arguments['1']);
   });
 });
 
-var sendLelylan = function(id, payload) {
+var syncLelylan = function(id, payload) {
   var uri = 'http://api.lelylan.com/devices/' + id + '/properties';
   var options = { uri: uri, method: 'PUT', json: payload }
 
