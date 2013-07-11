@@ -45,8 +45,14 @@ app.get('/', function(req, res) {
 // MQTT node -> publish to the device
 
 app.put('/mqtt/devices/:id', function(req, res) {
-  publish(req, '/get');
-  res.status(202).json({status:202});
+  var status = 401;
+
+  Device.findOne({ _id: req.params.id, secret: req.get('X-Physical-Secret') }, function (err, doc) {
+    if (err) console.log(err.message);
+    if (doc) { status = 202; publish(req, '/get') };
+
+    res.status(status).json({status:status});
+  });
 });
 
 var publish = function(req, mode) {

@@ -32,6 +32,7 @@ describe('MQTT Node',function() {
 
   beforeEach(function() {
     nock.cleanAll();
+    Device.find().remove()
   });
 
   beforeEach(function(done) {
@@ -71,39 +72,71 @@ describe('MQTT Node',function() {
 	});
 
 
-	describe('publish (PUT /mqtt/devices/:id)',function() {
+	describe('request PUT /mqtt/devices/:id',function() {
 
 		beforeEach(function(done) {
 			ascoltatori.build(settings, function() { done() });
 		});
 
-		beforeEach(function() {
-			execute = request(app)
-				.put('/mqtt/devices/' + device.id)
-				.set('Content-Type', 'application/json')
-				.set('X-Physical-Secret', device.secret)
-				.send(payload)
-		});
+    describe('with valid x-device-secret header', function() {
 
-		it('returns 202', function(done) {
-			execute.expect(202).expect({ status: 202 }, done);
-		});
+      beforeEach(function() {
+        execute = request(app)
+          .put('/mqtt/devices/' + device.id)
+          .set('Content-Type', 'application/json')
+          .set('X-Physical-Secret', device.secret)
+          .send(payload)
+      });
 
-		it('publish on /devices/:id/get', function(done) {
-			async.series([
-				function(cb) {
-					ascoltatori.build(settings, function(ascoltatore) {
-						ascoltatore.subscribe('devices/' + device.id + '/get', function() {
-							expect(arguments['0']).to.be.equal('devices/' + device.id + '/get');
-							expect(arguments['1']).to.be.like(payload)
-							done()
-						}); cb();
-					});
-				},
-				function(cb) {
-					execute.expect(202, cb)
-				}
-			]);
-		});
+      it('returns 202', function(done) {
+        execute.expect(202).expect({ status: 202 }, done);
+      });
+
+      it('publish on /devices/:id/get', function(done) {
+        async.series([
+          function(cb) {
+            ascoltatori.build(settings, function(ascoltatore) {
+              ascoltatore.subscribe('devices/' + device.id + '/get', function() {
+                expect(arguments['0']).to.be.equal('devices/' + device.id + '/get');
+                expect(arguments['1']).to.be.like(payload)
+                done()
+              });
+              cb();
+            });
+          },
+          function(cb) {
+            execute.expect(202, cb)
+          }
+        ]);
+      });
+    });
+
+    describe('with no valid x-device-secret header', function() {
+
+      beforeEach(function() {
+        execute = request(app)
+          .put('/mqtt/devices/' + device.id)
+          .set('Content-Type', 'application/json')
+          .set('X-Physical-Secret', 'not-valid')
+          .send(payload)
+      });
+
+      it('returns 401', function(done) {
+        execute.expect(401).expect({ status: 401 }, done);
+      });
+
+      it('does not publish on /devices/:id/get', function(done) {
+        var spy = sinon.spy(ascoltatori, 'publish');
+        async.series([
+          function(cb) {
+            execute.expect(401, cb)
+          },
+          function(cb) {
+            expect(spy.callCount).to.have.eql(0);
+            done();
+          }
+        ]);
+      });
+    });
 	});
 });
