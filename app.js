@@ -6,7 +6,6 @@ var mongoose = require('mongoose')
   , debug    = require('debug')('lelylan')
   , Device   = require('./app/models/devices/device');
 
-
 var ascoltatori = require('ascoltatori')
   , ascoltatore;
 
@@ -29,8 +28,8 @@ app.configure(function() {
   app.use(express.static(__dirname + '/app/assets'))
 });
 
-server.listen(process.env.PORT, function() {
-  debug('Server listening on port', process.env.PORT);
+server.listen(process.env.NODE_PORT, function() {
+  debug('Nodes server listening on port', process.env.NODE_PORT);
 });
 
 
