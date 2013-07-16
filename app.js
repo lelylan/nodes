@@ -57,6 +57,7 @@ app.put('/mqtt/devices/:id', function(req, res) {
 
 var publish = function(req, mode) {
   var topic = 'devices/' + req.params.id + mode;
+  debug('Publishing topic', topic);
   ascoltatore.publish(topic, req.body);
 }
 
@@ -76,7 +77,7 @@ ascoltatori.build(settings, function (_ascoltatore) {
 });
 
 var syncLelylan = function(id, payload) {
-  var uri = 'http://api.lelylan.com/devices/' + id + '/properties';
+  var uri = process.env.LELYLAN_API_URL + '/devices/' + id + '/properties';
   var options = { uri: uri, method: 'PUT', json: payload }
 
 	Device.findOne({ _id: id }, function (err, doc) {
@@ -87,7 +88,7 @@ var syncLelylan = function(id, payload) {
 
 			request(options, function(err, response, body) {
 				if (err) console.log('ERROR', err.message);
-				debug('Sent request to lelylan device with id', doc.id)
+				debug('Sent request to', uri)
 			});
 		}
   });
