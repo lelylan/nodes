@@ -54,9 +54,8 @@ Do not forget to provide specs to your contribution.
 ### Running specs
 
 * Fork and clone the repository
-* Run `gem install foreman`
 * Run `npm install`
-* Run `foreman run mocha test/app_spec.js --env .test.env`
+* Run `npm test`
 
 
 ## Coding guidelines

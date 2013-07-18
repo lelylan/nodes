@@ -1,6 +1,6 @@
 {
-  "name": "mqtt",
-  "description": "MQTT Server for Lelylan",
+  "name": "lelylan-nodes",
+  "description": "Lelylan nodes to let Lelylan access the largest number of devices",
   "author": "Lelylan Dev Team <touch@lelylan.com>",
   "scripts": {
     "start": "node app.js",
@@ -19,7 +19,8 @@
     "bunyan": "~0.21.3",
     "mosca": "~0.7.3",
     "ascoltatori": "~0.7.4",
-    "debug": "~0.7.2"
+    "debug": "~0.7.2",
+    "mqtt": "~0.2.10"
   },
   "engines": {
     "node": "~0.8.x",

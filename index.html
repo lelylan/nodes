@@ -11,11 +11,13 @@
     <link rel="stylesheet" href="stylesheets/bootstrap-responsive.min.css">
     <style>
       .main { margin-top:20px; width: 440px; }
-      .row { margin-left: 0; }
+			.row { margin-left: 0; }
+			.node { margin-top: 20px; }
+			.node h3 { color: #239cbb; }
       .navbar a, .navbar a:hover { color: #333; font-size: 16px; }
       .device { width: 325px; }
       .label { font-size: 20px; font-weight: 200; padding: 7px }
-      .label-success { background-color: #239cbb; }
+      .label-success { background-color: #239cbb !important; }
       a { cursor: pointer; }
     </style>
   </head>
@@ -30,19 +32,16 @@
     </div>
 
     <div class="container main">
-      <div class="row">
-        <h1>MQTT Test Page</h1>
-        <p class="lead label label-success">Successfully connected to websocket</p>
-        <p class="lead label label-important">Disconnected</p>
-        <p class="lead">
-        This page simulates an MQTT client connection.
-        Whenever you see the disconnected label there is
-        something wrong you need to fix.
-        </p>
+      <div>
+				<h1>Lelylan Nodes</h1>
+				<div class="node">
+					<h3>√ Lelylan MQTT Node</h3>
+					<p class="lead">
+					This node enable the connection of any MQTT client to Lelylan.
+					</p>
+					<p><a class="label label-success" href="http://dev.lelylan.com/api/physicals/mqtt">Learn more about Lelylan MQTT&rarr;</a></p>
+				</div>
       </div>
 		</div>
-
-		<script src="javascripts/mqttws31.js"></script>
-		<script src="javascripts/default.js"></script>
   </body>
 </html>
