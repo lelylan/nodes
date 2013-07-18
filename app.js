@@ -28,8 +28,8 @@ app.configure(function() {
   app.use(express.static(__dirname + '/app/assets'))
 });
 
-server.listen(process.env.NODE_PORT, function() {
-  debug('Nodes server listening on port', process.env.NODE_PORT);
+server.listen(process.env.PORT, function() {
+  debug('Nodes server listening on port', process.env.PORT);
 });
 
 
@@ -46,6 +46,7 @@ app.get('/', function(req, res) {
 
 app.put('/mqtt/devices/:id', function(req, res) {
   var status = 401;
+  debug('Receiving request');
 
   Device.findOne({ _id: req.params.id, secret: req.get('X-Physical-Secret') }, function (err, doc) {
     if (err) console.log(err.message);
