@@ -1,16 +1,13 @@
 # Lelylan Gateway
 
 Gateway to access different **nodes** connecting the physical world to
-Lelylan [Lelylan](http://dev.lelylan.com). A node represents the way
-a physical device (or a family of devices) are connected to the web.
+[Lelylan](http://dev.lelylan.com).
 
-- [X] [Lelylan MQTT](nodes.lelylan.com/mqtt)
-- [ ] [Electric Imp](nodes.lelylan.com/electricimp)
-- [ ] [lockitron](nodes.lelylan.com/lockitron)
+- [X] MQTT
 
-In other words Lelylan Nodes aims to connect the largest number of new
-and existing devices to the Lelylan platform in an open and collaborative
-way.
+In other words Lelylan Nodes aims to connect the largest number of devices
+to the Lelylan platform in an open and collaborative way by making any
+device interoperate to each other.
 
 
 ## Requirements
@@ -37,7 +34,7 @@ Run Node server.
 
 ## Deploy
 
-Follow [getting started with jitsu](https://www.nodejitsu.com/getting-started/).
+* Run `git push heroku master`
 
 
 ## Resources
@@ -60,13 +57,14 @@ Do not forget to provide specs to your contribution.
 
 ## Coding guidelines
 
-Follow [github](https://github.com/styleguide/) guidelines.
+Follow [felix](http://nodeguide.com/style.html) guidelines.
 
 
 ## Feedback
 
 Use the [issue tracker](http://github.com/lelylan/nodes/issues) for bugs.
-[Mail](mailto:touch@lelylan.com) or [Tweet](http://twitter.com/lelylan) us for any idea that can improve the project.
+[Mail](mailto:touch@lelylan.com) or [Tweet](http://twitter.com/lelylan) us for any idea that
+can improve the project.
 
 
 ## Links
@@ -74,6 +72,7 @@ Use the [issue tracker](http://github.com/lelylan/nodes/issues) for bugs.
 * [GIT Repository](http://github.com/lelylan/nodes)
 * [Ascoltatori](https://github.com/mcollina/ascoltatori)
 * [Physical API](http://dev.lelylan.com/api/physicals)
+* [MQTT](http://dev.lelylan.com/api/physicals/mqtt)
 * [Lelylan Dev Center](http://dev.lelylan.com)
 * [Lelylan Site](http://lelylan.com)
 

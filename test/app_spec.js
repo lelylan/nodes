@@ -42,7 +42,8 @@ describe('MQTT Node',function() {
     });
   });
 
-	describe('subscribe',function() {
+
+	describe('when receives a subscribed notification',function() {
 
 		beforeEach(function() {
 			lelylan = nock('http://api.lelylan.com')
@@ -72,7 +73,7 @@ describe('MQTT Node',function() {
 	});
 
 
-	describe('request PUT /mqtt/devices/:id',function() {
+	describe('when receives a PUT /mqtt/devices/:id',function() {
 
 		beforeEach(function(done) {
 			ascoltatori.build(settings, function() { done() });
