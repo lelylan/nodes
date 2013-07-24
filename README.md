@@ -29,7 +29,6 @@ Run Node server.
 ## Getting Started
 
 * Run `foreman start`
-* Open the [server](http://localhost:8004)
 
 
 ## Deploy
