@@ -1,9 +1,9 @@
 # Lelylan Gateway
 
 Gateway to access different **nodes** connecting the physical world to
-[Lelylan](http://dev.lelylan.com).
+[Lelylan](http://dev.lelylan.com). Covered ones are:
 
-- [X] MQTT
+- [x] MQTT
 
 In other words Lelylan Nodes aims to connect the largest number of devices
 to the Lelylan platform in an open and collaborative way by making any
