@@ -103,6 +103,8 @@ module.exports = app;
 
 // nodetime monitoring
 if (process.env.NODE_ENV == 'production') {
+  console.log('Sending monitoring data to nodetime', process.env.NODE_ENV);
+
   require('nodetime').profile({
     accountKey: '030a1222bf8efceac3d583c62c31c5ae47ce1633',
     appName: 'lelylan-nodes'
