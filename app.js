@@ -1,3 +1,7 @@
+// nodetime monitoring
+require('nodetime').profile({ appName: 'lelylan-nodes', accountKey: '030a1222bf8efceac3d583c62c31c5ae47ce1633' });
+
+// libraries
 var mongoose = require('mongoose')
   , express  = require('express')
   , app      = express()
@@ -101,12 +105,3 @@ var setHeaders = function(secret) {
 
 module.exports = app;
 
-// nodetime monitoring
-if (process.env.NODE_ENV == 'production') {
-  console.log('Sending monitoring data to nodetime', process.env.NODE_ENV);
-
-  require('nodetime').profile({
-    accountKey: '030a1222bf8efceac3d583c62c31c5ae47ce1633',
-    appName: 'lelylan-nodes'
-  });
-}
