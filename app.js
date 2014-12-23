@@ -63,6 +63,8 @@ app.put('/mqtt/devices/:id', function(req, res) {
 });
 
 var publish = function(req, mode) {
+  debug('[API REQ] topic definition', req.params);
+  debug('[API REQ] topic definition', req.params.id);
   var topic = 'devices/' + req.params.id + mode;
   debug('[API REQ] Publishing topic', topic, req.body);
   ascoltatore.publish(topic, req.body);
