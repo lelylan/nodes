@@ -64,7 +64,7 @@ app.put('/mqtt/devices/:id', function(req, res) {
 
 var publish = function(req, mode) {
   var topic = 'devices/' + req.params.id + mode;
-  debug('Publishing topic', topic);
+  debug('[API REQ] Publishing topic', topic, req.body);
   ascoltatore.publish(topic, req.body);
 }
 
@@ -76,6 +76,7 @@ ascoltatori.build(settings, function (_ascoltatore) {
   ascoltatore = _ascoltatore;
 
   ascoltatore.subscribe('devices/*', function() {
+    debug('[PHYSICAL REQ] Publishing topic', topic, req.body);
     debug('TOPIC', arguments['0'], 'PAYLOAD', arguments['1']);
 
     var data = arguments['0'].split('/');
