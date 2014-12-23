@@ -15,12 +15,13 @@ var ascoltatori = require('ascoltatori')
   , ascoltatore;
 
 var settings = {
-    type: 'mongo',
-    uri: process.env.MONGOLAB_JOBS_HOST,
-    db: process.env.MONGOLAB_JOBS_DB,
-    pubsubCollection: 'mqtt',
-    mongo: {}
-  };
+  type: 'redis',
+  redis: require('redis'),
+  db: 12,
+  port: 6379,
+  return_buffers: true,
+  host: process.env.REDIS_HOST
+};
 
 
 // ---------------
@@ -105,4 +106,3 @@ var setHeaders = function(secret) {
 }
 
 module.exports = app;
-
