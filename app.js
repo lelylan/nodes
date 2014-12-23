@@ -86,7 +86,7 @@ ascoltatori.build(settings, function (_ascoltatore) {
 
 var syncLelylan = function(id, payload) {
   var uri = process.env.LELYLAN_API_URL + '/devices/' + id + '/properties';
-  var options = { uri: uri, method: 'PUT', json: payload }
+  var options = { uri: uri, method: 'PUT', json: JSON.stringify(payload) }
 
 	Device.findOne({ _id: id }, function (err, doc) {
 		if (err) console.log('ERROR', err.message);
@@ -96,7 +96,7 @@ var syncLelylan = function(id, payload) {
 
 			request(options, function(err, response, body) {
 				if (err) console.log('ERROR', err.message);
-				debug('Sent request to', uri, payload.message)
+				debug('Sent request to', uri, JSON.stringify(payload.message))
 			});
 		}
   });
