@@ -8,7 +8,7 @@
   },
   "version": "0.1.0",
   "dependencies": {
-    "ascoltatori": "~0.7.4",
+    "ascoltatori": "~0.11.5",
     "async": "~0.1.22",
     "debug": "~0.7.2",
     "express": "~3.2.6",
