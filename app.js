@@ -19,7 +19,6 @@ var settings = {
   redis: require('redis'),
   db: 12,
   port: 6379,
-  return_buffers: true,
   host: process.env.REDIS_HOST
 };
 
@@ -97,7 +96,7 @@ var syncLelylan = function(id, payload) {
 
 			request(options, function(err, response, body) {
 				if (err) console.log('ERROR', err.message);
-				debug('Sent request to', uri, payload)
+				debug('Sent request to', uri, payload.message)
 			});
 		}
   });
