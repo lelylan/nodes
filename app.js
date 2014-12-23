@@ -79,9 +79,9 @@ ascoltatori.build(settings, function (_ascoltatore) {
 
   ascoltatore.subscribe('devices/*', function() {
     debug('TOPIC', arguments['0'], 'PAYLOAD', arguments['1']);
-
     var data = arguments['0'].split('/');
-    if (data[2] == 'set') syncLelylan(data[1], arguments['1']);
+    if (data[2] == 'set')
+      syncLelylan(data[1], arguments['1']);
   });
 });
 
@@ -97,7 +97,7 @@ var syncLelylan = function(id, payload) {
 
 			request(options, function(err, response, body) {
 				if (err) console.log('ERROR', err.message);
-				debug('Sent request to', uri)
+				debug('Sent request to', uri, payload)
 			});
 		}
   });
