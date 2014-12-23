@@ -87,7 +87,7 @@ ascoltatori.build(settings, function (_ascoltatore) {
 var syncLelylan = function(id, payload) {
   var uri = process.env.LELYLAN_API_URL + '/devices/' + id + '/properties';
   var json = JSON.parse(new Buffer(payload.message, 'hex').toString('utf8'));
-  var options = { uri: uri, method: 'PUT', json: JSON.stringify(json) }
+  var options = { uri: uri, method: 'PUT', json }
 
 	Device.findOne({ _id: id }, function (err, doc) {
 		if (err) console.log('ERROR', err.message);
