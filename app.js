@@ -60,7 +60,7 @@ app.put('/mqtt/devices/:id', function(req, res) {
 
   Device.findOne({ _id: req.params.id, secret: req.get('X-Physical-Secret') }, function (err, doc) {
     if (err) console.log(err.message);
-    if (doc) { status = 202; publish(req, '/get') };
+    if (doc) { status = 202; publish(req, '/get/') };
 
     res.status(status).json({status:status});
   });
