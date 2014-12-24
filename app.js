@@ -101,7 +101,7 @@ var syncLelylan = function(id, payload) {
 
 			request(options, function(err, response, body) {
 				if (err) console.log('ERROR', err.message);
-				debug('Sent request to', uri, JSON.stringify(payload.message))
+				debug('Sent request to', uri, json)
 			});
 		}
   });
