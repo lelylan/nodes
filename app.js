@@ -54,6 +54,8 @@ app.get('/', function(req, res) {
 
 app.put('/mqtt/devices/:id', function(req, res) {
   var status = 401;
+  req.body = Buffer(req.body).toString('hex')
+
   debug('Receiving request', req.body);
 
   Device.findOne({ _id: req.params.id, secret: req.get('X-Physical-Secret') }, function (err, doc) {
@@ -67,8 +69,7 @@ app.put('/mqtt/devices/:id', function(req, res) {
 var publish = function(req, mode) {
   var topic = 'devices/' + req.params.id + mode;
   debug('[API REQ] Publishing topic', topic, req.body);
-  message = Buffer(req.body).toString('hex')
-  debug('[HEX MESSAGE]', message)
+  debug('[HEX MESSAGE]', req.body);
   ascoltatore.publish(topic, message, function() {
     console.log('[API REQ] Message published to the topic', topic, req.body, message);
   });
