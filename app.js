@@ -11,6 +11,11 @@ var mongoose = require('mongoose')
   , debug    = require('debug')('lelylan')
   , Device   = require('./app/models/devices/device');
 
+var mqtt = require('mqtt');
+
+var host = '178.62.108.47'
+  , port = '1883';
+
 var ascoltatori = require('ascoltatori')
   , ascoltatore;
 
@@ -59,7 +64,15 @@ app.put('/mqtt/devices/:id', function(req, res) {
 
   Device.findOne({ _id: req.params.id, secret: req.get('X-Physical-Secret') }, function (err, doc) {
     if (err) console.log(err.message);
-    if (doc) { status = 202; publish(req, '/get/') };
+    if (doc) {
+      status = 202;
+      //publish(req, '/get/')
+
+      var client = mqtt.createClient(port, host, { username: req.params.id, password: req.get('X-Physical-Secret') });
+      client.on('connect', function() {
+        client.publish('devices/' + req.params.id + '/get', JSON.stringify(req.body));
+      })
+    };
 
     res.status(status).json({status:status});
   });
@@ -70,6 +83,9 @@ var publish = function(req, mode) {
   payload.message = new Buffer(payload.message, 'hex');
   var topic = 'devices/' + req.params.id + mode;
   debug('[API REQ] Publishing topic', topic, req.body, payload.toString());
+
+
+
   ascoltatore.publish(topic, req.body, function() {
     console.log('[API REQ] Message published to the topic', topic, req.body);
   });
