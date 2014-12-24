@@ -54,7 +54,7 @@ app.get('/', function(req, res) {
 
 app.put('/mqtt/devices/:id', function(req, res) {
   var status = 401;
-  debug('Receiving request');
+  debug('Receiving request', req.body);
 
   Device.findOne({ _id: req.params.id, secret: req.get('X-Physical-Secret') }, function (err, doc) {
     if (err) console.log(err.message);
