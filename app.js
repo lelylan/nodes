@@ -54,7 +54,7 @@ app.get('/', function(req, res) {
 
 app.put('/mqtt/devices/:id', function(req, res) {
   var status = 401;
-  req.body = Buffer(req.body).toString('hex')
+  req.body = Buffer(JSON.stringify(req.body)).toString('hex'); // needed with Redis
 
   debug('Receiving request', req.body);
 
@@ -71,7 +71,7 @@ var publish = function(req, mode) {
   debug('[API REQ] Publishing topic', topic, req.body);
   debug('[HEX MESSAGE]', req.body);
   ascoltatore.publish(topic, message, function() {
-    console.log('[API REQ] Message published to the topic', topic, req.body, message);
+    console.log('[API REQ] Message published to the topic', topic, req.body);
   });
 }
 
@@ -93,7 +93,7 @@ ascoltatori.build(settings, function (_ascoltatore) {
 
 var syncLelylan = function(id, payload) {
   var uri = process.env.LELYLAN_API_URL + '/devices/' + id + '/properties';
-  var json = JSON.parse(new Buffer(payload.message, 'hex').toString('utf8'));
+  var json = JSON.parse(new Buffer(payload.message, 'hex').toString('utf8'));  // needed with Redis
   var options = { uri: uri, method: 'PUT', body: json, json: true };
 
 	Device.findOne({ _id: id }, function (err, doc) {
