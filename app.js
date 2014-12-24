@@ -25,6 +25,7 @@ var settings = {
 
 // ---------------
 // Express Server
+// ---------------
 
 app.configure(function() {
   app.use(express.bodyParser());
@@ -40,14 +41,16 @@ server.listen(process.env.PORT, function() {
 
 // ---------------
 // Live page test
+// ---------------
 
 app.get('/', function(req, res) {
   res.sendfile(__dirname + '/index.html')
 });
 
 
-// -----------------------------------
-// MQTT node -> publish to the device
+// -------------------------------------------
+// From Lelylan to the Physical Device (/GET)
+// -------------------------------------------
 
 app.put('/mqtt/devices/:id', function(req, res) {
   var status = 401;
@@ -64,14 +67,15 @@ app.put('/mqtt/devices/:id', function(req, res) {
 var publish = function(req, mode) {
   var topic = 'devices/' + req.params.id + mode;
   debug('[API REQ] Publishing topic', topic, req.body);
-  ascoltatore.publish(topic, req.body, function() {
-    console.log('[API REQ] Message published to the topic');
+  ascoltatore.publish(topic, "test", function() {
+    console.log('[API REQ] Message published to the topic', topic, req.body);
   });
 }
 
 
-// --------------------------------------
-// MQTT node <- subscribe to the devices
+// -------------------------------------------
+// From the Physical Device to Lelylan (/SET)
+// -------------------------------------------
 
 ascoltatori.build(settings, function (_ascoltatore) {
   ascoltatore = _ascoltatore;
