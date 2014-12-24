@@ -69,7 +69,7 @@ var publish = function(req, mode) {
   payload.message = new Buffer(payload.message, 'hex');
   var topic = 'devices/' + req.params.id + mode;
   debug('[API REQ] Publishing topic', topic, req.body, payload);
-  ascoltatore.publish(topic, payload.message, function() {
+  ascoltatore.publish(topic, payload.message.toString(), function() {
     console.log('[API REQ] Message published to the topic', topic, req.body);
   });
 }
