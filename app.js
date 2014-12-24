@@ -54,7 +54,7 @@ app.get('/', function(req, res) {
 
 app.put('/mqtt/devices/:id', function(req, res) {
   var status = 401;
-  req.body = Buffer(JSON.stringify(req.body)).toString('hex'); // needed with Redis
+  //req.body = Buffer(JSON.stringify(req.body)).toString('hex'); // needed with Redis
 
   debug('Receiving request', req.body);
 
@@ -69,7 +69,7 @@ app.put('/mqtt/devices/:id', function(req, res) {
 var publish = function(req, mode) {
   var topic = 'devices/' + req.params.id + mode;
   debug('[API REQ] Publishing topic', topic, req.body);
-  ascoltatore.publish(topic, "{ message: '7b2270726f70657274696573223a5b7b226964223a22353138626535613730303034356531353231303030303031222c2276616c7565223a226f6e227d5d7d'", function() {
+  ascoltatore.publish(topic, req.body, function() {
     console.log('[API REQ] Message published to the topic', topic, req.body);
   });
 }
