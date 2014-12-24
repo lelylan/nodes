@@ -71,6 +71,7 @@ app.put('/mqtt/devices/:id', function(req, res) {
       var client = mqtt.createClient(port, host, { username: req.params.id, password: req.get('X-Physical-Secret') });
       client.on('connect', function() {
         client.publish('devices/' + req.params.id + '/get', JSON.stringify(req.body));
+        client.end();
       })
     };
 
