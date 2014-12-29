@@ -82,6 +82,8 @@ app.put('/mqtt/devices/:id', function(req, res) {
 
 var publish = function(req, mode) {
   // Needed to work with Redis (and Mosca default settings)
+  // * Hex transformation for the JSON body
+  // * Binary definition for Redis to understand the stored format type
   payload = { message: new Buffer(JSON.stringify(req.body)).toString('hex'), binary: true };
   var topic = 'devices/' + req.params.id + mode;
   ascoltatore.publish(topic, payload, function() {
