@@ -13,7 +13,7 @@ var mongoose = require('mongoose')
 
 var mqtt = require('mqtt');
 
-var host = '178.62.108.47'
+var host = process.env.MOSCA_HOST
   , port = '1883';
 
 var ascoltatori = require('ascoltatori')
@@ -66,13 +66,14 @@ app.put('/mqtt/devices/:id', function(req, res) {
     if (err) console.log(err.message);
     if (doc) {
       status = 202;
-      //publish(req, '/get/')
+      publish(req, '/get/')
 
-      var client = mqtt.createClient(port, host, { username: req.params.id, password: req.get('X-Physical-Secret') });
-      client.on('connect', function() {
-        client.publish('devices/' + req.params.id + '/get', JSON.stringify(req.body));
-        client.end();
-      })
+      // BAD HACK
+      //var client = mqtt.createClient(port, host, { username: req.params.id, password: req.get('X-Physical-Secret') });
+      //client.on('connect', function() {
+        //client.publish('devices/' + req.params.id + '/get', JSON.stringify(req.body));
+        //client.end();
+      //})
     };
 
     res.status(status).json({status:status});
@@ -80,15 +81,11 @@ app.put('/mqtt/devices/:id', function(req, res) {
 });
 
 var publish = function(req, mode) {
-  payload = { message: req.body };
-  payload.message = new Buffer(payload.message, 'hex');
+  // Needed to work with Redis (and Mosca default settings)
+  payload = { message: new Buffer(JSON.stringify(req.body)).toString('hex'), binary: true };
   var topic = 'devices/' + req.params.id + mode;
-  debug('[API REQ] Publishing topic', topic, req.body, payload.toString());
-
-
-
-  ascoltatore.publish(topic, req.body, function() {
-    console.log('[API REQ] Message published to the topic', topic, req.body);
+  ascoltatore.publish(topic, payload, function() {
+    console.log('[API REQ] Message published to the topic', topic, payload);
   });
 }
 
