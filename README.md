@@ -6,7 +6,14 @@ Enable a two way communication between the cloud and the physical world. Lelylan
 
 - [x] MQTT
 
-Help us on adding [new nodes](http://thethingsystem.com/dev/supported-things.html)
+
+#### Programmed Nodes
+
+- [ ] Nest
+- [ ] Lifx
+
+Help us on adding [new nodes](http://thethingsystem.com/dev/supported-things.html).
+
 
 ## Requirements
 
