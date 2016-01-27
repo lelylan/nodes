@@ -61,7 +61,7 @@ Use the [issue tracker](http://github.com/lelylan/nodes/issues) for bugs or [sta
 
 ## Links
 
-* [GIT Repository](http://github.com/lelylan/node)
+* [GIT Repository](http://github.com/lelylan/nodes)
 * [Lelylan Dev Center](http://dev.lelylan.com)
 * [Lelylan Site](http://lelylan.com)
 
