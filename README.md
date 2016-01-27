@@ -2,7 +2,7 @@
 
 Enable a two way communication between the cloud and the physical world. Lelylan Nodes want to integrate the largest number of connected devices to a unique platform, making them all accessible through a unique API. A very nice work in this direction is [thethingsystem.com](http://thethingsystem.com/).
 
-### Exisiting Nodes
+#### Exisiting Nodes
 
 - [x] MQTT
 
