@@ -2,13 +2,11 @@
 
 Enable a two way communication between the cloud and the physical world.
 
+Exisiting Nodes.
 - [x] MQTT
-- [ ] Lifx
-- [ ] Nest
 
-Lelylan Nodes comes to life to make it possible to integrate the largest number of devices
-to a unique platform, making all connected products accessible through a unique API. 
-An nice project to work with to reach this goal is [thethingsystem.com](http://thethingsystem.com/).
+Lelylan Nodes want to integrate the largest number of connected devices to a unique platform, making them all
+accessible through a unique API. A very nice work in this direction is [thethingsystem.com](http://thethingsystem.com/).
 
 
 ## Requirements
