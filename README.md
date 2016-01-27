@@ -1,13 +1,14 @@
-# Lelylan Gateway
+# Lelylan Nodes
 
-Gateway to access different **nodes** connecting the physical world to
-[Lelylan](http://dev.lelylan.com). Covered ones are:
+Enable a two way communication between the cloud and the physical world.
 
 - [x] MQTT
+- [ ] Lifx
+- [ ] Nest
 
-In other words Lelylan Nodes aims to connect the largest number of devices
-to the Lelylan platform in an open and collaborative way by making any
-device interoperate to each other.
+Lelylan Nodes comes to life to make it possible to integrate the largest number of devices
+to a unique platform, making all connected products accessible through a unique API. 
+An nice project to work with to reach this goal is [thethingsystem.com](http://thethingsystem.com/).
 
 
 ## Requirements
@@ -15,37 +16,26 @@ device interoperate to each other.
 Lelylan Nodes is tested against Node 0.8.8.
 
 
-## Installation
-
-Clone the repository.
-
-    git clone git@github.com:lelylan/nodes.git
-
-Run Node server.
-
-    foreman start
-
-
 ## Getting Started
 
-* Run `foreman start`
-
-
-## Deploy
-
-* Run `git push heroku master`
+* Clone `git clone git@github.com:lelylan/mqtt.git`
+* Run `npm install && npm install -g foreman`
+* Run `mongod` (MongoDB up and running)
+* Run `nf start`
 
 
 ## Resources
 
+* [Lelylan Dev Center](http://dev.lelylan.com)
+* [Mosca](https://github.com/mcollina/mosca)
 * [Ascoltatori](https://github.com/mcollina/ascoltatori)
-* [Physical API](http://dev.lelylan.com/api/physicals)
 
 
 ## Contributing
 
 Fork the repo on github and send a pull requests with topic branches.
 Do not forget to provide specs to your contribution.
+
 
 ### Running specs
 
@@ -61,37 +51,33 @@ Follow [felix](http://nodeguide.com/style.html) guidelines.
 
 ## Feedback
 
-Use the [issue tracker](http://github.com/lelylan/nodes/issues) for bugs.
-[Mail](mailto:touch@lelylan.com) or [Tweet](http://twitter.com/lelylan) us for any idea that
-can improve the project.
+Use the [issue tracker](http://github.com/lelylan/nodes/issues) for bugs or [stack overflow](http://stackoverflow.com/questions/tagged/lelylan) for questions.
+[Mail](mailto:dev@lelylan.com) or [Tweet](http://twitter.com/lelylan) us for any idea that can improve the project.
 
 
 ## Links
 
-* [GIT Repository](http://github.com/lelylan/nodes)
-* [Ascoltatori](https://github.com/mcollina/ascoltatori)
-* [Physical API](http://dev.lelylan.com/api/physicals)
-* [MQTT](http://dev.lelylan.com/api/physicals/mqtt)
+* [GIT Repository](http://github.com/lelylan/node)
 * [Lelylan Dev Center](http://dev.lelylan.com)
 * [Lelylan Site](http://lelylan.com)
 
 
 ## Authors
 
-[Andrea Reginato](http://twitter.com/andreareginato)
+[Andrea Reginato](https://www.linkedin.com/in/andreareginato)
 
 
 ## Contributors
 
-Special thanks to the [following people](https://github.com/lelylan/nodes/contributors) for submitting patches.
+Special thanks to all [contributors](https://github.com/lelylan/nodes/contributors)
+for submitting patches.
 
 
 ## Changelog
 
-See [CHANGELOG](nodes/blob/master/CHANGELOG.md)
+See [CHANGELOG](https://github.com/lelylan/nodes/blob/master/CHANGELOG.md)
 
 
-## Copyright
+## License
 
-Copyright (c) 2013 [Lelylan](http://lelylan.com).
-See [LICENSE](nodes/blob/master/LICENSE.md) for details.
+Lelylan is licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
