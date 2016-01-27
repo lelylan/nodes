@@ -20,12 +20,12 @@ Help us on adding [new nodes](http://thethingsystem.com/dev/supported-things.htm
 Lelylan Nodes is tested against Node 0.8.8.
 
 
-## Getting Started
+## Installation
 
-* Clone `git clone git@github.com:lelylan/mqtt.git`
-* Run `npm install && npm install -g foreman`
-* Run `mongod` (MongoDB up and running)
-* Run `nf start`
+    $ mongod
+    $ git clone git@github.com:lelylan/mqtt.git
+    $ npm install && npm install -g foreman
+    $ nf start
 
 
 ## Resources
@@ -50,7 +50,7 @@ Do not forget to provide specs to your contribution.
 
 ## Coding guidelines
 
-Follow [felix](http://nodeguide.com/style.html) guidelines.
+Follow [Felix](http://nodeguide.com/style.html) guidelines.
 
 
 ## Feedback
