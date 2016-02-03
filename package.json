@@ -3,7 +3,6 @@
   "description": "Lelylan nodes to let Lelylan access the largest number of devices",
   "author": "Lelylan Dev Team <touch@lelylan.com>",
   "scripts": {
-    "start": "node app.js",
     "test": "make bail"
   },
   "version": "0.1.0",
@@ -29,7 +28,6 @@
     "nock": "~0.13.7",
     "database-cleaner": "~0.7.0",
     "factory-lady": "~0.1.0",
-    "coffee": "0.0.1",
     "supertest": "~0.7.0",
     "async": "~0.1.22",
     "chai": "~1.7.2",
