@@ -22,6 +22,8 @@ Lelylan Nodes is tested against Node 0.8.8.
     $ git clone git@github.com:lelylan/nodes.git && cd nodes
     $ npm install && npm install -g foreman
     $ nf start
+    
+When installing the service in production set [lelylan environment variables](https://github.com/lelylan/lelylan/blob/master/README.md#production).
 
 
 ## Resources
