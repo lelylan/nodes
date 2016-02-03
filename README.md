@@ -20,7 +20,7 @@ Lelylan Nodes is tested against Node 0.8.8.
 ## Installation
 
     $ git clone git@github.com:lelylan/nodes.git && cd nodes
-    $ npm install && npm install -g foreman coffee-script
+    $ npm install && npm install -g foreman
     $ nf start
 
 
