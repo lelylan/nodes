@@ -1,17 +1,15 @@
 # Lelylan Nodes
 
-Enable a two way communication between the cloud and the physical world. 
-
-Lelylan Nodes want to integrate the largest number of connected devices to a unique platform, making them all accessible through a unique API. A very nice work in this direction is [thethingsystem.com](http://thethingsystem.com/).
+Enable a two way communication between the cloud and the physical world
+(a node enable the communication between Lelylan and a specific protocol/product)
 
 #### Supported Nodes
 
 - [x] MQTT
 
+#### Desired Nodes
 
-#### Future Nodes
-
-A very nice project to look at for defining more nodes is [thethingsystem](http://thethingsystem.com/dev/supported-things.html). Most common connected products should be added.
+The desire is to let many device connect through Lelylan. A nice project to look at to reach this goal is [thethingsystem](http://thethingsystem.com/dev/supported-things.html).
 
 
 ## Requirements
@@ -21,17 +19,14 @@ Lelylan Nodes is tested against Node 0.8.8.
 
 ## Installation
 
-    $ mongod
-    $ git clone git@github.com:lelylan/mqtt.git
-    $ npm install && npm install -g foreman
+    $ git clone git@github.com:lelylan/nodes.git && cd nodes
+    $ npm install && npm install -g foreman coffee-script
     $ nf start
 
 
 ## Resources
 
-* [Lelylan Dev Center](http://dev.lelylan.com)
-* [Mosca](https://github.com/mcollina/mosca)
-* [Ascoltatori](https://github.com/mcollina/ascoltatori)
+* [Lelylan Physical API](http://dev.lelylan.com/api#api-physical)
 
 
 ## Contributing
@@ -42,9 +37,8 @@ Do not forget to provide specs to your contribution.
 
 ### Running specs
 
-* Fork and clone the repository
-* Run `npm install`
-* Run `npm test`
+        npm install
+        npm test
 
 
 ## Coding guidelines
