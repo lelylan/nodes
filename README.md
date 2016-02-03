@@ -1,18 +1,17 @@
 # Lelylan Nodes
 
-Enable a two way communication between the cloud and the physical world. Lelylan Nodes want to integrate the largest number of connected devices to a unique platform, making them all accessible through a unique API. A very nice work in this direction is [thethingsystem.com](http://thethingsystem.com/).
+Enable a two way communication between the cloud and the physical world. 
+
+Lelylan Nodes want to integrate the largest number of connected devices to a unique platform, making them all accessible through a unique API. A very nice work in this direction is [thethingsystem.com](http://thethingsystem.com/).
 
 #### Supported Nodes
 
 - [x] MQTT
 
 
-#### Programmed Nodes
+#### Future Nodes
 
-- [ ] Nest
-- [ ] Lifx
-
-Help us on adding [new nodes](http://thethingsystem.com/dev/supported-things.html).
+A very nice project to look at for defining more nodes is [thethingsystem](http://thethingsystem.com/dev/supported-things.html). Most common connected products should be added.
 
 
 ## Requirements
