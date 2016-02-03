@@ -9,7 +9,7 @@ Enable a two way communication between the cloud and the physical world
 
 #### Desired Nodes
 
-The desire is to let many device connect through Lelylan. A nice project to look at to reach this goal is [thethingsystem](http://thethingsystem.com/dev/supported-things.html).
+We want to connect as many existing connected products using different Lelylan Nodes. A nice project heading to this direction is [thethingsystem](http://thethingsystem.com/dev/supported-things.html).
 
 
 ## Requirements
