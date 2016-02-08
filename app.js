@@ -1,7 +1,3 @@
-// nodetime monitoring
-require('nodetime').profile({ appName: 'lelylan-nodes', accountKey: '030a1222bf8efceac3d583c62c31c5ae47ce1633' });
-setInterval(function() { require('request')('http://nodes.lelylan.com'); }, 360000);
-
 // libraries
 var mongoose = require('mongoose')
   , express  = require('express')
