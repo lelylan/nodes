@@ -1,11 +1,6 @@
 FROM node:0.8
 MAINTAINER Federico Gonzalez <https://github.com/fedeg>
 
-RUN apt-get update -qq \
- && apt-get install -y libzmq3 libzmq3-dev build-essential make \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
 RUN npm config set registry http://registry.npmjs.org
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
