@@ -16,18 +16,32 @@ We want to connect as many existing connected products using different Lelylan N
 
 Lelylan Nodes is tested against Node 0.8.8.
 
-
 ## Installation
 
-    $ git clone git@github.com:lelylan/nodes.git && cd nodes
-    $ npm install && npm install -g foreman
-    $ nf start
+```bash
+$ git clone git@github.com:lelylan/nodes.git && cd nodes
+$ npm install && npm install -g foreman
+$ nf start
+```
 
 ## Install with docker
 
-    $ docker build --tag=nodes .
-    $ docker run -d -it --name nodes nodes
-    
+#### Badges
+Docker image: [lelylanlab/nodes](https://hub.docker.com/r/lelylanlab/nodes/)
+
+[![](https://images.microbadger.com/badges/version/lelylanlab/nodes:latest.svg)](http://microbadger.com/images/lelylanlab/nodes:latest "Get your own version badge on microbadger.com")  [![](https://images.microbadger.com/badges/image/lelylanlab/nodes:latest.svg)](http://microbadger.com/images/lelylanlab/nodes:latest "Get your own image badge on microbadger.com")
+
+### Use docker hub image
+```bash
+$ docker run -d -it --name nodes lelylanlab/nodes
+```
+
+### Generate local image
+```bash
+$ docker build --tag=nodes .
+$ docker run -d -it --name nodes nodes
+```
+
 When installing the service in production set [lelylan environment variables](https://github.com/lelylan/lelylan/blob/master/README.md#production).
 
 
@@ -44,9 +58,10 @@ Do not forget to provide specs to your contribution.
 
 ### Running specs
 
-        npm install
-        npm test
-
+```bash
+$ npm install
+$ npm test
+```
 
 ## Coding guidelines
 
